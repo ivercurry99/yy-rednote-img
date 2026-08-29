@@ -17,9 +17,7 @@
 
 ## 项目简介
 
-`yy-text2-xhs-img` 可以把一句话需求（例如 *"夏天油皮护肤三步曲，做 4 张小红书配图"*）
-转化为**风格一致、可复现、可降级**的 AI 图片集。不再每次"写个 Prompt 拼运气"，
-而是在调用任何模型之前，先通过结构化 Schema 把所有可变因素锁死。
+`yy-text2-xhs-img` 可以把一句话需求（例如 *"夏天油皮护肤三步曲，做 4 张小红书配图"*）转化为**风格一致、可复现、可降级**的 AI 图片集。不再每次"写个 Prompt 拼运气"，而是在调用任何模型之前，先通过结构化 Schema 把所有可变因素锁死。
 
 核心脚本 `scripts/generate.py` 解决了 6 个最疼的实际问题：
 
@@ -32,23 +30,16 @@
 | 🚫 损坏/截断图片悄悄发出去了 | **每张图必检**：PNG Magic 头 + 50 KB 下限 + 比例容差 < 1%；失败自动重试，不合格文件移入 `_failed/`。 |
 | 🔁 "上周那篇出图效果好，想一模一样再来一次" | **manifest.json** 记录每张卡片的供应商 ID、种子、Prompt、预设、尺寸 — 重新执行即可 1:1 复现。 |
 
-支持两种运行模式，无论你是在智能体宿主（TRAE / Codex / Claude Desktop 的 skills 目录）
-里跑，还是在 Shell 中直接调 API，走的都是同一套核心逻辑：
+支持两种运行模式，无论你是在智能体宿主（TRAE / Codex / Claude Desktop 的 skills 目录）里跑，还是在 Shell 中直接调 API，走的都是同一套核心逻辑：
 
-- **智能体模式（默认）**：先写一份 `tasks.json` 描述每张卡片；宿主调用自带的
-  `GenerateImage` / Seedream 插件把 PNG 丢进运行目录；脚本二次校验 + 写 manifest。
-- **API 模式（`--mode api`）**：环境变量存在 Key 时，脚本直接调 OpenAI DALL·E 3 /
-  FAL FLUX 生成。
+- **智能体模式（默认）**：先写一份 `tasks.json` 描述每张卡片；宿主调用自带的 `GenerateImage` / Seedream 插件把 PNG 丢进运行目录；脚本二次校验 + 写 manifest。
+- **API 模式（`--mode api`）**：环境变量存在 Key 时，脚本直接调 OpenAI DALL·E 3 / FAL FLUX 生成。
 
 ---
 
 ## 为什么能做到稳定出图？
 
-因为**一致性才是小红书笔记的产品力**。读者在刷 4 张 carousel 的时候，
-如果第 1 张是奶油 INS 风、第 2 张突然跳成 Y2K 铬金属，他在看到 CTA 之前就会划走。
-脚本强制用一套严格的 **Prompt 拼接顺序**：主体还原 → 构图 → 灯光 → 氛围 →
-调色板锁定 → 场景具象化 → 角色定位，**之后**再给封面/步骤卡/过渡卡/收尾图拼上
-各自的角色话术。
+因为**一致性才是小红书笔记的产品力**。读者在刷 4 张 carousel 的时候，如果第 1 张是奶油 INS 风、第 2 张突然跳成 Y2K 铬金属，他在看到 CTA 之前就会划走。脚本强制用一套严格的 **Prompt 拼接顺序**：主体还原 → 构图 → 灯光 → 氛围 → 调色板锁定 → 场景具象化 → 角色定位，**之后**再给封面/步骤卡/过渡卡/收尾图拼上各自的角色话术。
 
 在此之上，你仍然可以通过 CLI 参数自由定制：
 
@@ -66,9 +57,7 @@
 
 ## 八套内置风格预设
 
-每套预设都是调优、锁死、并且**小红书原生适配**过的造型手册，
-都包含 **5 色调色板**、**4+ 条构图规则**、**4+ 条灯光规则**、
-**氛围 + 镜头 + 质量增强 + 反风格负面词**：
+每套预设都是调优、锁死、并且**小红书原生适配**过的造型手册，都包含 **5 色调色板**、**4+ 条构图规则**、**4+ 条灯光规则**、**氛围 + 镜头 + 质量增强 + 反风格负面词**：
 
 | `--style` | 视觉印象 | 最适合 |
 |---|---|---|
@@ -81,8 +70,7 @@
 | `product-flatlay` | 正 90° 平铺 + 麻布/牛皮纸背景 + 道具同色系点缀 | 合集 · 开箱 · 护肤步骤 · 拆箱 |
 | `cute-illustration` | 粗边圆润描边 + 三丽鸥马卡龙色 + 扁平矢量 | 知识卡片 · 教程 · 儿童教育 |
 
-完整 Schema 见 `styles/presets.json`；如何追加自定义预设详见
-`references/prompt-engineering.md` 第 7 节。
+完整 Schema 见 `styles/presets.json`；如何追加自定义预设详见 `references/prompt-engineering.md` 第 7 节。
 
 ---
 
@@ -119,15 +107,11 @@ cd yy-text2-xhs-img
 pip install -r requirements.txt
 ```
 
-流水线核心的唯一硬依赖是 Python 3.10+。图片校验环节在 Pillow 已安装时使用 Pillow，
-否则自动退回纯 Python 的 PNG IHDR 解析实现 — 也就是说，在**纯标准库**环境里，
-dry-run 和智能体模式也能照常工作。
+流水线核心的唯一硬依赖是 Python 3.10+。图片校验环节在 Pillow 已安装时使用 Pillow，否则自动退回纯 Python 的 PNG IHDR 解析实现 — 也就是说，在**纯标准库**环境里，dry-run 和智能体模式也能照常工作。
 
 ### 3. （可选）配置 API Key
 
-详见 `references/fallback-strategy.md`。只有你要用 `--mode api` 调
-DALL·E 3 / FAL FLUX 时才需要 Key；默认降级链里的前两级（TRAE 内置 + Seedream 插件）
-是**完全零配置**的。
+详见 `references/fallback-strategy.md`。只有你要用 `--mode api` 调 DALL·E 3 / FAL FLUX 时才需要 Key；默认降级链里的前两级（TRAE 内置 + Seedream 插件）是**完全零配置**的。
 
 ---
 
@@ -145,8 +129,7 @@ python scripts/generate.py ^
   --dry-run-prompts
 ```
 
-这条命令会把**封面 + 3 张正文**的 Prompt 和负面词完整打印出来，
-方便你在调用模型前先核对调色板锁死行和场景细节。新的选题强烈建议先空跑一次。
+这条命令会把**封面 + 3 张正文**的 Prompt 和负面词完整打印出来，方便你在调用模型前先核对调色板锁死行和场景细节。新的选题强烈建议先空跑一次。
 
 ### 智能体模式（默认） — 用宿主自带的生图工具
 
@@ -159,10 +142,8 @@ python scripts/generate.py ^
 ```
 
 它会：
-1. 生成 `output/<run-id>/tasks.json`，每张卡片一个任务（Prompt、负面词、
-   TRAE 尺寸预设、比例、宽高）。
-2. 把路径打印出来；宿主依次读取任务，调用 `GenerateImage` 或 Seedream 插件，
-   将 `cover.png`、`card_1.png`……写入运行目录。
+1. 生成 `output/<run-id>/tasks.json`，每张卡片一个任务（Prompt、负面词、TRAE 尺寸预设、比例、宽高）。
+2. 把路径打印出来；宿主依次读取任务，调用 `GenerateImage` 或 Seedream 插件，将 `cover.png`、`card_1.png`……写入运行目录。
 3. 调用 `--resume <run-id>` 进行 PNG 校验 + 写 `manifest.json`。
 
 ### API 模式 — 直连 DALL·E 3 / FLUX（环境变量里有 Key 时）
@@ -182,13 +163,11 @@ python scripts/generate.py ^
   --providers fal-flux,dalle3   # 只选付费供应商，跳过智能体专用的
 ```
 
-失败的调用会按 2 → 4 → 8 秒退避重试 3 次；某家供应商彻底挂了就切到下一家；
-**每一张**图片写进 manifest 之前都必须通过 PNG 头校验和比例校验。
+失败的调用会按 2 → 4 → 8 秒退避重试 3 次；某家供应商彻底挂了就切到下一家；**每一张**图片写进 manifest 之前都必须通过 PNG 头校验和比例校验。
 
 ### 严格模式（像素级比例对齐）
 
-默认比例容差是 1%（允许尺寸桶取整的误差）。如果你的笔记版式是硬裁切裁切框、
-必须严格 3:4，加上 `--strict`：
+默认比例容差是 1%（允许尺寸桶取整的误差）。如果你的笔记版式是硬裁切裁切框、必须严格 3:4，加上 `--strict`：
 
 ```bash
 python scripts/generate.py … --strict
@@ -263,14 +242,12 @@ pytest tests/test_generate.py -v --cov=scripts --cov-report=term
 
 贡献流程：
 1. 先开 issue 描述你修改要解决的场景（避免重复劳动，也能挡住跑偏的 PR）。
-2. 对应测试加进 `tests/test_generate.py`，保证修完就不再回退。新增预设的话，
-   在 `TestPresetSchema` 里加一段显式断言，并在 `evals/evals.json` 补一组回归用例。
-3. 本地全量测试过：在**纯标准库**和**装了 Pillow** 两种环境都跑 `pytest tests/ -v`，
-   确保纯 Python PNG 解析路径没被你弄坏。
+2. 对应测试加进 `tests/test_generate.py`，保证修完就不再回退。新增预设的话，在 `TestPresetSchema` 里加一段显式断言，并在 `evals/evals.json` 补一组回归用例。
+3. 本地全量测试过：在**纯标准库**和**装了 Pillow** 两种环境都跑 `pytest tests/ -v`，确保纯 Python PNG 解析路径没被你弄坏。
 4. 发 PR，CI 会再跑一遍矩阵。
 
 ---
 
 ## 许可证
 
-MIT © 2026 姚中文。详见 `LICENSE` 文件。
+MIT © 2026 ivercurry99。详见 `LICENSE` 文件。
