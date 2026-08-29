@@ -3,7 +3,7 @@ name: yy-text2-xhs-img
 description: "结构化 Prompt + 多模型适配器，一键生成小红书封面和正文配图。用户需要稳定、风格一致的小红书 AI 生图时使用；支持 TRAE 内置、Seedream 插件、DALL·E 3、FLUX 多模型自动降级，内置 8 种小红书风格预设与负面词库。"
 license: MIT
 version: 1.0.0
-author: 姚中文
+author: ivercurry99
 triggers:
   - "小红书生图"
   - "小红书配图"
