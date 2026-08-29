@@ -1,128 +1,116 @@
-# Model Capability Matrix & Selection Guide
+# 模型能力矩阵 & 选型指南
 
-This skill ships a 4-provider adapter.  These are not "all equivalent with
-different logos".  Each model has strengths and weaknesses that are visible
-*even with exactly the same prompt*.  Use the right tool for the job.
+本技能自带 4 路供应商适配器。这 4 家**不是"换 Logo 的等价品"**，
+即使 Prompt 完全一样，它们的强项和短板也会肉眼可见地体现出来。
+不同的选题，该用不同的主力模型来跑。
 
-> Scores are relative, 1–5, based on side-by-side subjective tests on
-> Xiaohongshu-style workloads (skincare products, fashion flat lays,
-> editorials, food, illustrations).  Your mileage on other domains may vary.
+> 下表评分是 1–5 的相对分，来自小红书工作负载（护肤品、穿搭平铺、大片、
+> 美食、插画）下的主观盲测对比。放到其它领域（如医疗、工程渲染）你的体验
+> 可能完全不同，评分仅供参考。
 
 ---
 
-## 1. Capability table
+## 1. 能力总表
 
-| Capability | TRAE native `GenerateImage` | Seedream 4.x plugin | DALL·E 3 | FLUX Dev (FAL) |
+| 能力维度 | TRAE 内置 `GenerateImage` | Seedream 4.x 插件 | DALL·E 3 | FLUX Dev (FAL) |
 |---|---|---|---|---|
-| **Provider id** | `trae-native` | `seedream-plugin` | `dalle3` | `fal-flux` |
-| Cost | FREE | FREE with TRAE | paid (~$0.04 / HD image) | paid (~$0.03 / image) |
-| Requires key | no | plugin auth | `OPENAI_API_KEY` | `FAL_KEY` |
-| Speed (first byte) | very fast (s) | fast (<15s) | medium (15–30s) | medium (15–40s) |
-| Chinese **semantic** understanding | 4 | **5** | 2 | 3 |
-| **Chinese characters drawn in image** | 1 | 1 | **4** | 2 |
-| English typography | 2 | 2 | **5** | **4** |
-| Human anatomy realism | 3 | 4 | 4 | **5** |
-| Hand / finger correctness | 3 | 3 | 4 | **5** |
-| Palette lock stability | 3 | 4 | 3 | **5** |
-| Consistency across a 4-card set | 3 | 3 | 4 | **4** |
-| Product / e-commerce realism | 3 | 4 | 4 | **5** |
-| Guochao / Chinese motifs | 3 | **5** | 2 | 3 |
-| Cinematic / film grain | 3 | **5** | 3 | **5** |
-| Flat illustration / sticker style | 4 | 4 | 4 | 3 |
-| Y2K / cyber chrome | 3 | 4 | 3 | **5** |
-| Minimal pure-white product | 3 | 4 | **5** | 4 |
-| Cute macaron illustration | **4** | 3 | 4 | 2 |
+| **供应商 ID** | `trae-native` | `seedream-plugin` | `dalle3` | `fal-flux` |
+| 成本 | 免费 | TRAE 内免费 | 付费（约 $0.04 / HD 张） | 付费（约 $0.03 / 张） |
+| 要不要 Key | 不要 | 插件授权即可 | 需要 `OPENAI_API_KEY` | 需要 `FAL_KEY` |
+| 首字节速度 | 极快（秒级） | 快（< 15s） | 中（15–30s） | 中（15–40s） |
+| 中文**语义**理解 | 4 | **5** | 2 | 3 |
+| 画面里**画中文字** | 1 | 1 | **4** | 2 |
+| 英文排版能力 | 2 | 2 | **5** | **4** |
+| 人体真实度 | 3 | 4 | 4 | **5** |
+| 手/手指正确率 | 3 | 3 | 4 | **5** |
+| 调色板锁定稳定性 | 3 | 4 | 3 | **5** |
+| 4 张图集的一致性 | 3 | 3 | 4 | **4** |
+| 产品 / 电商真实感 | 3 | 4 | 4 | **5** |
+| 国潮 / 中国纹样 | 3 | **5** | 2 | 3 |
+| 电影感 / 胶卷颗粒 | 3 | **5** | 3 | **5** |
+| 扁平插画 / 贴纸风 | 4 | 4 | 4 | 3 |
+| Y2K / 赛博铬金属 | 3 | 4 | 3 | **5** |
+| 极简纯白产品 | 3 | 4 | **5** | 4 |
+| 可爱马卡龙插画 | **4** | 3 | 4 | 2 |
 
-### Quick decision flow (most common cases)
+### 快速决策流（最常见场景）
 
 ```
-Need Chinese text in the image? ──yes──> start with dalle3
+图里要中文文字？ ──是──> 从 dalle3 开始
    │
-   └───no, Guochao / festival / Chinese motifs? ──yes──> start with seedream-plugin
+   └──否，国潮 / 节日 / 中式纹样多？ ──是──> 从 seedream-plugin 开始
             │
-            └───no, People / faces / hands heavily featured? ──yes──> start with fal-flux
+            └──否，人物 / 脸 / 手占画面大比例？ ──是──> 从 fal-flux 开始
                      │
-                     └───no, Illustration / kids / pastel / low budget? ──yes──> start with trae-native
+                     └──否，插画 / 儿童 / 马卡龙 / 预算有限？ ──是──> 从 trae-native 开始
                               │
-                              └───no, Product / white background / e-commerce? ──yes──> dalle3 or fal-flux
+                              └──否，产品 / 白底 / 电商？ ──是──> dalle3 或 fal-flux
                                        │
-                                       └───default: trae-native → seedream → fal-flux fallback chain
+                                       └──默认：trae-native → seedream → fal-flux 链
 ```
 
 ---
 
-## 2. Aspect ratio native buckets
+## 2. 各模型原生尺寸桶（比例映射）
 
-Models only generate a small set of native sizes.  If you ask for a
-non-native size you usually get a silent crop that ruins composition.
-`styles/presets.json → sizeMap` already locks the 4 Xiaohongshu standard
-ratios to the closest native bucket on each model, and the
-`validate_ratio()` check catches any residual drift.
+模型只会生成一小把"原生尺寸"。如果你给它一个非原生 W×H，
+大多数供应商会**静默裁切**，直接破坏构图。
+`styles/presets.json → sizeMap` 已经把小红书 4 种标准比例
+锁到每家最接近的原生桶。`validate_ratio()` 校验器会兜底，
+把残差再抓回来。
 
-| Ratio | Nominal W×H | TRAE size | Seedream aspect | DALL·E 3 size | FLUX FAL image_size |
-|---|---|---|---|---|---|
-| **3:4** ⭐ feed default | 1080×1440 | `portrait_4_3` | `3:4` ✅ | `1024×1792` ★ closest | `768×1024` → you upscale |
-| **1:1** square | 1024×1024 | `square_hd` | `1:1` ✅ | `1024×1024` ✅ | `1024×1024` ✅ |
-| **4:3** horizontal | 1440×1080 | `landscape_4_3` | `4:3` ✅ | `1792×1024` ★ closest | `1024×768` → upscale |
-| **9:16** story/short | 1080×1920 | `portrait_16_9` | `9:16` ✅ | `1024×1792` (nearest) | `720×1280` → upscale |
+| 比例 | TRAE 内置尺寸名 | DALL·E 3 尺寸 | FAL FLUX 尺寸 | 真实分辨率 (接近) |
+|---|---|---|---|---|
+| 3:4（小红书首页默认） | `portrait_4_3` | `1024×1792` | `832×1104` | ≈ 1080×1440 |
+| 1:1 方图 | `square_hd` | `1024×1024` | `1024×1024` | 1024×1024 |
+| 4:3 横图 | `landscape_4_3` | `1792×1024` | `1104×832` | ≈ 1440×1080 |
+| 9:16 故事 | `portrait_16_9` | *无原生（脚本取 1024×1792 并严格比例校验）* | `768×1360` | ≈ 1080×1920 |
 
-★ = DALL·E 3 does not have a perfect 3:4 or 4:3 bucket, so you get a 1792-pixel
-long edge image that you then crop to 3:4.  This is still usually preferable to
-the other providers' off-composition crops, but enable `--strict` if
-pixel-perfect framing matters.
-
----
-
-## 3. Consistency across a multi-card set
-
-This is the #1 complaint we hear.  Achieving "looks like it came from one
-shoot" requires **all** of these:
-
-1. ✅ Fixed preset (same 5 hexes, same composition, same lighting, same camera
-   line) → done by `styles/presets.json`.
-2. ✅ One provider for the whole set (never let 2 cards run on seedream and 2 on
-   FLUX — colour science is different, they can't match).  To enforce, run
-   with `--providers fal-flux` (or your single choice) so fallback won't hop.
-3. ✅ Consistency suffix appended to every card's prompt:
-   ```
-   --extra-prompt-suffix "same 5-hex palette, same lighting setup, same camera lens, same shooting angle as the other cards in this post"
-   ```
-4. ✅ Same seed where supported (FLUX returns a seed; DALL·E 3 doesn't).  Store
-   it via `manifest.json` and reuse it on subsequent expansions.
-
-Even with all four you'll occasionally get visible drift — the simplest
-mitigation is to enable `--strict` and regenerate only the drifted card
-against the successful chain + seed.
+> 注意：DALL·E 3 **没有真正的 9:16 桶**。遇到 9:16 选题（比如故事图）时，
+> 推荐显式 `--providers fal-flux,seedream-plugin`，把 dalle3 从默认链里拿掉，
+> 避免拿到一张上下白边的"假竖图"。
 
 ---
 
-## 4. Provider limitations & quirks
+## 3. 推荐组合（预设 × 供应商）
 
-### `trae-native`
-- Free & instant, quality varies by hosting environment.
-- **Palette drift** is the main downside.  Use it for drafts / illustation
-  styles, not for brand-locked production posts.
+这是最常见的 8 套预设的最优首发供应商，能拿到最高的风格命中率：
 
-### `seedream-plugin`
-- Cinematic colour grading and Chinese semantic knowledge are class-leading.
-- Draws from Bytedance's Chinese-first training corpus so it absolutely nails
-  guochao festival, cha kan (茶歇) food shots, Chinese interior / domestic
-  lifestyle scenes.
-- **Weakness**: typography and complex English scene text comes out garbled.
-  Don't use when `has_text=true`.
+| 预设 | 推荐首发供应商 | 为什么 |
+|---|---|---|
+| `ins-aesthetic` | seedream-plugin / fal-flux | Seedream 的电影感调色最贴 INS 奶油风 |
+| `clean-minimal` | dalle3 / fal-flux | DALL·E 3 的纯白无缝最干净，几乎没有暗角 |
+| `neo-chinese` | **seedream-plugin（首选）** | 中文纹样、红金配色，Seedream 的语义优势碾压 |
+| `y2k-funky` | fal-flux | FLUX 的铬金属和高饱和度控制最强 |
+| `magazine-editorial` | fal-flux / seedream-plugin | 胶卷颗粒 + 三灯布光两家都强，FLUX 手指更稳 |
+| `emotional-daily` | seedream-plugin | Kodak Gold 200 / 黄金时段的氛围拿捏最准 |
+| `product-flatlay` | dalle3 / trae-native | 俯视对称 + 道具均匀分布，DALL·E 3 很稳 |
+| `cute-illustration` | trae-native / dalle3 | 三丽鸥马卡龙色，TRAE 内置性价比最高 |
 
-### `dalle3`
-- The gold standard for typography (Chinese *and* English).
-- Composition is very "clean / catalog" oriented — white minimal products
-  look amazing; moody editorials can feel a bit flat / well-lit.
-- No seed exposed, so cross-run consistency is the worst of the 4 providers.
+---
 
-### `fal-flux` (FLUX Dev via FAL)
-- Best anatomy, best palette lock, best style control for fashion & editorial.
-- With 32 steps it's the slowest provider here, and costs 1-2c per image on
-  average.
-- **Weakness**: Chinese-culture specific motifs (Mid-Autumn mooncakes,
-  Spring Festival couplets, etc.) sometimes come out Japanese/Korean-looking.
-  Pair with seedream-plugin first, or use a very explicit scene prompt with
-  keywords like `dunhuang mural palette`, `Chinese red cinnabar lacquer box`,
-  `dougong bracket architecture`.
+## 4. 集级一致性（4 张像同一套）的 3 条铁律
+
+出图"不像一套"是被吐槽最多的问题，只要按以下 3 条做，基本能解决：
+
+1. **钉死一家供应商。** seedream-plugin → dalle3 的风格跳变是最大的。
+   显式 `--providers fal-flux` 钉死后，4 张图的整体观感会统一很多。
+2. **尽量走 `--same-seed <整数>`。** 脚本会把同一张 seed 复用到所有卡片，
+   只改 CARD ROLE 话术。实测能显著降低"肤色/色调飘"。
+3. **严格比例 + 严格尺寸。** 先 `--strict`，再用 manifest 复核每张的
+   `provider_id`、`seed`、`width`、`height`，任何一项不同都可能是跳变的原因。
+
+---
+
+## 5. 什么时候必须换供应商？
+
+如果你看到以下症状，就不要重试同一家了，直接从 manifest 里确认失败原因，
+再手动调 `--providers`：
+
+- 颜色反复飘（调色板锁定行存在，但画面还是乱色）→ **上 fal-flux**。
+- 手/手指畸形严重 → **上 fal-flux**。
+- 画面必须带中文文字且不能后期补 → **上 dalle3**。
+- 国潮纹样/文字元素缺失 → **上 seedream-plugin**。
+- 预算有限且是插画/知识卡片选题 → **trae-native** 足够。
+
+以上规则的优先级永远高于评分表。
