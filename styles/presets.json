@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "presets": {
+    "ins-aesthetic": {
+      "displayName": "INS Cream Aesthetic",
+      "palette": ["#FFF8F0", "#F5E6D3", "#E8D5C4", "#D4B896", "#A67B5B"],
+      "paletteLock": true,
+      "composition": [
+        "rule of thirds",
+        "soft centered composition",
+        "20 percent clean negative space on top and bottom",
+        "no crowded elements"
+      ],
+      "lighting": [
+        "soft diffused morning window light",
+        "no harsh shadows",
+        "gentle highlights",
+        "warm color temperature around 5200K"
+      ],
+      "atmosphere": [
+        "dreamy creamy aesthetic",
+        "low contrast muted tones",
+        "clean and airy",
+        "cozy lifestyle",
+        "instagram viral look"
+      ],
+      "camera": "shot on 50mm f/1.8 prime lens, shallow depth of field, bokeh background",
+      "qualityBooster": [
+        "8k uhd",
+        "ultra detailed",
+        "photorealistic",
+        "editorial photography",
+        "very fine film grain"
+      ],
+      "negativeExtra": ["vivid", "saturated", "harsh", "hdr", "overexposed", "cartoon render"],
+      "bestFor": ["skincare", "fashion", "lifestyle", "ootd"]
+    },
+    "clean-minimal": {
+      "displayName": "Clean Minimal White Product",
+      "palette": ["#FFFFFF", "#F5F5F5", "#E0E0E0", "#333333", "#CCCCCC"],
+      "paletteLock": true,
+      "composition": [
+        "flat lay top-down view",
+        "product perfectly centered",
+        "symmetrical",
+        "massive clean white negative space around 60 percent"
+      ],
+      "lighting": [
+        "studio softbox even lighting from top",
+        "crisp contact hard shadow slightly offset",
+        "pure white seamless background"
+      ],
+      "atmosphere": [
+        "minimalist product photography",
+        "clean catalog shot",
+        "e-commerce hero image",
+        "premium luxury feel"
+      ],
+      "camera": "shot on 100mm macro lens, deep depth of field, razor sharp focus on product",
+      "qualityBooster": [
+        "commercial product retouch",
+        "8k",
+        "high fidelity textures",
+        "no dust no scratches"
+      ],
+      "negativeExtra": ["people", "hand", "skin", "clutter", "props", "messy", "background objects"],
+      "bestFor": ["beauty product", "cosmetics", "electronics", "single product hero"]
+    },
+    "neo-chinese": {
+      "displayName": "Neo-Chinese Guochao Red Gold",
+      "palette": ["#8B0000", "#C8102E", "#D4AF37", "#F5E6C8", "#2C2C2C"],
+      "paletteLock": true,
+      "composition": [
+        "golden ratio asymmetric composition",
+        "chinese traditional layout with breathing room",
+        "cloud or wave motif on corners",
+        "single hero product or scene"
+      ],
+      "lighting": [
+        "dramatic side light",
+        "gold rim light",
+        "rich red and gold color grading",
+        "cinematic contrast"
+      ],
+      "atmosphere": [
+        "modern chinese guochao aesthetic",
+        "ink wash painting texture overlay",
+        "oriental luxury",
+        "festive elegant mood"
+      ],
+      "camera": "medium shot on 85mm lens, cinematic composition, moody atmosphere",
+      "qualityBooster": [
+        "8k cinematic",
+        "ultra detailed textures",
+        "velvety shadows",
+        "rich color depth"
+      ],
+      "negativeExtra": ["western clothes", "modern buildings", "english text", "anime", "kpop"],
+      "bestFor": ["festival", "chinese style", "lipstick", "tea", "cultural products"]
+    },
+    "y2k-funky": {
+      "displayName": "Y2K Funky High Saturation",
+      "palette": ["#FF6EC7", "#05D9E8", "#FFD23F", "#7E00F5", "#FF3366"],
+      "paletteLock": true,
+      "composition": [
+        "dynamic tilted dutch angle",
+        "sticker-like layering",
+        "bold frame",
+        "playful dense layout"
+      ],
+      "lighting": [
+        "neon pop lighting",
+        "vibrant magenta and cyan rim lights",
+        "flash photography overexposed highlights"
+      ],
+      "atmosphere": [
+        "early 2000s y2k aesthetic",
+        "cyber y2k chrome",
+        "teen magazine vibe",
+        "funky and bold",
+        "glossy and pearlescent"
+      ],
+      "camera": "point and shoot digital camera, flash washed look, fisheye lens optional",
+      "qualityBooster": [
+        "glossy plastic textures",
+        "chrome accents",
+        "holographic foil",
+        "vivid saturated colors"
+      ],
+      "negativeExtra": ["muted", "pastel only", "dull", "minimal", "boring"],
+      "bestFor": ["gen z", "trendy", "campus life", "kpop style", "summer"]
+    },
+    "magazine-editorial": {
+      "displayName": "Magazine Editorial Spread",
+      "palette": ["#1A1A1A", "#FAFAFA", "#8B0000", "#C0C0C0", "#B8860B"],
+      "paletteLock": true,
+      "composition": [
+        "editorial magazine layout",
+        "golden section or rule of thirds",
+        "strong leading lines",
+        "copy space reserved on left or right 30 percent"
+      ],
+      "lighting": [
+        "moody three point studio lighting",
+        "Rembrandt lighting",
+        "deep cinematic shadows",
+        "film grain 35mm Kodak Portra 400"
+      ],
+      "atmosphere": [
+        "high fashion vogue editorial",
+        "sophisticated luxury magazine spread",
+        "thought provoking visual storytelling",
+        "serif typography friendly negative space"
+      ],
+      "camera": "Hasselblad medium format, 80mm f/2.8, extremely detailed, professional color grading",
+      "qualityBooster": [
+        "ultra sharp",
+        "rich tonality",
+        "editorial retouching",
+        "high budget fashion campaign",
+        "film grain"
+      ],
+      "negativeExtra": ["selfie", "snapchat", "amateur", "phone pic"],
+      "bestFor": ["long form article", "opinion piece", "fashion editorial", "high end"]
+    },
+    "emotional-daily": {
+      "displayName": "Warm Emotional Daily Film",
+      "palette": ["#E97451", "#F2C078", "#8E402A", "#3D1308", "#F4E8C1"],
+      "paletteLock": true,
+      "composition": [
+        "hand held candid first person view",
+        "slightly off center",
+        "environmental context visible",
+        "cozy messy life details"
+      ],
+      "lighting": [
+        "warm golden hour sunset backlight",
+        "candle light or tungsten",
+        "lens flare",
+        "soft shadows"
+      ],
+      "atmosphere": [
+        "quiet slice of life moment",
+        "film photography fuji c200 grain",
+        "nostalgic cozy mood",
+        "authentic daily vlog look",
+        "warm emotional storytelling"
+      ],
+      "camera": "35mm point and shoot, candid, slight motion blur, heavy film grain and warm tint",
+      "qualityBooster": [
+        "film grain heavy",
+        "authentic candid",
+        "warm tones",
+        "kodak gold 200",
+        "imperfectly perfect"
+      ],
+      "negativeExtra": ["studio", "posed", "stock photo", "perfect skin retouch", "studio lighting"],
+      "bestFor": ["daily life", "food diary", "cafe hopping", "travel", "mood"]
+    },
+    "product-flatlay": {
+      "displayName": "Product Flat Lay Haul",
+      "palette": ["#FFFFFF", "#F8F0E3", "#C9B8A5", "#8C7853", "#E8C547"],
+      "paletteLock": true,
+      "composition": [
+        "true top down 90 degree flat lay",
+        "items arranged in grid or gentle circle",
+        "matching props scattered sparingly",
+        "clean background linen or kraft paper"
+      ],
+      "lighting": [
+        "large soft north sky light",
+        "even illumination",
+        "no harsh shadow",
+        "subtle texture shadows"
+      ],
+      "atmosphere": [
+        "blogger flat lay composition",
+        "organized collection",
+        "haul unboxing vibe",
+        "warm neutral lifestyle palette"
+      ],
+      "camera": "top down on 24mm lens, sharp edge to edge, deep focus",
+      "qualityBooster": [
+        "ultra detailed textures on fabric and products",
+        "blogger photography",
+        "8k sharp"
+      ],
+      "negativeExtra": ["hands", "face", "people", "dark background", "random clutter"],
+      "bestFor": ["collection", "haul", "unboxing", "skincare routine steps", "comparison"]
+    },
+    "cute-illustration": {
+      "displayName": "Cute Pastel Illustration",
+      "palette": ["#FFD6E0", "#C3F0CA", "#B8E0F7", "#FFF1A8", "#D7C4FB"],
+      "paletteLock": true,
+      "composition": [
+        "flat vector illustration",
+        "thick rounded outline",
+        "plenty of cute small decorative elements",
+        "balance between text space and icon"
+      ],
+      "lighting": [
+        "no lighting or shadow",
+        "flat 2d",
+        "uniform colors",
+        "minimal gradient if any"
+      ],
+      "atmosphere": [
+        "sanrio cute aesthetic",
+        "kawaii sticker style",
+        "chibi and friendly",
+        "easy infographic for education",
+        "pastel macaron palette"
+      ],
+      "camera": "flat 2d illustration, no perspective",
+      "qualityBooster": [
+        "vector clean lines",
+        "crisp outlines",
+        "matte pastel fill",
+        "printable clipart"
+      ],
+      "negativeExtra": ["photoreal", "3d render", "realistic", "shading heavy", "photography", "complex detail"],
+      "bestFor": ["tutorial card", "knowledge card", "kids education", "habits tracker"]
+    }
+  },
+  "negativeBase": [
+    "watermark", "text", "letters", "signature", "logo", "username",
+    "blurry", "low quality", "low resolution", "pixelated",
+    "grain heavy", "noise", "jpeg artifacts",
+    "cropped", "out of frame",
+    "extra fingers", "mutated hands", "poorly drawn hands",
+    "deformed", "ugly", "duplicate", "cloned face",
+    "bad anatomy", "bad proportions", "extra limbs",
+    "fused fingers", "too many fingers", "long neck",
+    "cross-eyed", "cross eye"
+  ],
+  "sizeMap": {
+    "3:4":  { "square_hd": false, "trae_size": "portrait_4_3",  "width": 1080, "height": 1440 },
+    "1:1":  { "square_hd": true,  "trae_size": "square_hd",    "width": 1024, "height": 1024 },
+    "4:3":  { "square_hd": false, "trae_size": "landscape_4_3", "width": 1440, "height": 1080 },
+    "9:16": { "square_hd": false, "trae_size": "portrait_16_9", "width": 1080, "height": 1920 }
+  },
+  "topicVisualizeHints": {
+    "skincare": "glass cosmetic bottles on cream marble, toner cotton pad, dropper with serum drop, next to moisturizer jar, fingers gently patting cheek skin",
+    "fashion outfit": "flat lay of weekday outfits, blazer, silk blouse, leather loafers, mini handbag, watch laid on warm beige linen",
+    "study english": "pastel yellow open notebook with handwritten english vocabulary, apple pencil, retro dictionary, cup of matcha latte, flat lay on wooden desk, warm morning window light",
+    "lipstick makeup": "swatches of lipstick on forearm next to open tube, compact mirror, lip brush, vanity table with soft ring light",
+    "food dessert": "close up shot of plated dessert, fork with a bite, steam rising, crumbs on plate, linen napkin and silver cutlery",
+    "tech gadget": "sleek consumer electronics on matte black desk, wireless charging pad, usb-c cable, case, soft product hero lighting"
+  }
+}

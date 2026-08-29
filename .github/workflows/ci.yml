@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: "Unit tests · Python ${{ matrix.python-version }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Syntax check scripts/generate.py
+        run: |
+          python -c "import ast,sys; ast.parse(open('scripts/generate.py',encoding='utf-8').read()); print('generate.py syntax OK')"
+
+      - name: Validate styles/presets.json shape
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open("styles/presets.json", encoding="utf-8"))
+          assert "presets" in d and len(d["presets"]) >= 8, f"need >=8 presets, got {len(d.get('presets',{}))}"
+          assert "negativeBase" in d and len(d["negativeBase"]) >= 20
+          assert "sizeMap" in d and all(r in d["sizeMap"] for r in ("3:4","1:1","4:3","9:16"))
+          for name, p in d["presets"].items():
+              for field in ("displayName","palette","paletteLock","composition","lighting",
+                            "atmosphere","camera","qualityBooster","negativeExtra","bestFor"):
+                  assert field in p, f"preset '{name}' missing field '{field}'"
+          print(f"presets.json OK: {len(d['presets'])} presets, {len(d['negativeBase'])} negatives, {len(d['sizeMap'])} ratios")
+          PY
+
+      - name: pytest with coverage (real API providers are NEVER called)
+        env:
+          _SKIP_REAL_PROVIDERS: "1"
+        run: |
+          pytest tests/ -v \
+            --cov=scripts \
+            --cov-report=term-missing \
+            --cov-report=xml:coverage.xml \
+            --cov-fail-under=55
+
+      - name: CLI dry-run smoke test (Neo-Chinese lipstick 5 cards)
+        run: |
+          python scripts/generate.py \
+            --topic "Chinese Valentine lipstick haul" \
+            --cards 5 \
+            --style neo-chinese \
+            --ratio 3:4 \
+            --keywords "lipstick swatches,gold packaging" \
+            --exclude "no face" \
+            --dry-run-prompts --mode agent > /tmp/out.json
+          python -c "import json,sys; d=json.load(open('/tmp/out.json')); assert len(d['cards'])==5 and d['style']=='neo-chinese'; print('CLI dry-run OK: 5 cards')"
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-py${{ matrix.python-version }}
+          path: coverage.xml
+          if-no-files-found: ignore

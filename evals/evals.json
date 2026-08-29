@@ -1,0 +1,126 @@
+{
+  "version": "1.0.0",
+  "name": "yy-text2-xhs-img regression evals",
+  "description": "Offline, provider-independent regression checks for prompt composition, size-map routing and fallback orchestration. Run via pytest (tests/test_generate.py covers every assertion here.)",
+  "evals": [
+    {
+      "id": "EP-001",
+      "title": "INS-aesthetic cover prompt includes palette lock line + scene details + stop-scrolling hook",
+      "input": {
+        "topic": "Summer oily skincare 3 steps",
+        "card_index": 0,
+        "card_count": 4,
+        "preset": "ins-aesthetic",
+        "keywords": [],
+        "exclude": []
+      },
+      "assert": {
+        "prompt_contains_all": [
+          "stop-scrolling composition",
+          "palette strictly limited to hex colors #FFF8F0 #F5E6D3 #E8D5C4 #D4B896 #A67B5B",
+          "glass cosmetic bottles on cream marble",
+          "shot on 50mm f/1.8 prime lens"
+        ],
+        "negative_contains_all": ["watermark", "mutated hands", "vivid", "saturated"]
+      }
+    },
+    {
+      "id": "EP-002",
+      "title": "Neo-Chinese lipstick cover prompt includes red/gold palette and guochao atmosphere + user exclude",
+      "input": {
+        "topic": "retro lipstick makeup",
+        "card_index": 0,
+        "card_count": 5,
+        "preset": "neo-chinese",
+        "keywords": ["lipstick", "gold box"],
+        "exclude": ["no face", "no model"]
+      },
+      "assert": {
+        "prompt_contains_any": ["#8B0000", "#C8102E", "#D4AF37"],
+        "prompt_contains_all": ["gold rim light", "modern chinese guochao aesthetic"],
+        "negative_contains_all": ["watermark", "no face", "no model", "western clothes"]
+      }
+    },
+    {
+      "id": "EP-003",
+      "title": "Size-map ratio 3:4 maps to portrait_4_3 1080x1440",
+      "input": { "ratio": "3:4" },
+      "assert": {
+        "size.trae_size": "portrait_4_3",
+        "size.width": 1080,
+        "size.height": 1440
+      }
+    },
+    {
+      "id": "EP-004",
+      "title": "Size-map ratio 1:1 maps to square_hd 1024x1024",
+      "input": { "ratio": "1:1" },
+      "assert": {
+        "size.trae_size": "square_hd",
+        "size.width": 1024,
+        "size.height": 1024
+      }
+    },
+    {
+      "id": "EP-005",
+      "title": "Default fallback provider order: trae-native, seedream-plugin, dalle3, fal-flux",
+      "input": { "providers": "__default__" },
+      "assert": {
+        "chain_order": ["trae-native", "seedream-plugin", "dalle3", "fal-flux"]
+      }
+    },
+    {
+      "id": "EP-006",
+      "title": "has_text=false adds explicit no-text guard in prompt",
+      "input": {
+        "topic": "anything", "card_index": 0, "card_count": 1,
+        "preset": "clean-minimal", "has_text": false
+      },
+      "assert": {
+        "prompt_contains_all": ["no text, no letters, no characters, no words anywhere in the image"]
+      }
+    },
+    {
+      "id": "EP-007",
+      "title": "Final card index N-1 of an N-card set gets the result-shot role hook",
+      "input": {
+        "topic": "haul collection", "card_index": 3, "card_count": 4,
+        "preset": "product-flatlay"
+      },
+      "assert": {
+        "prompt_contains_all": ["FINAL CARD", "result shot"]
+      }
+    },
+    {
+      "id": "EP-008",
+      "title": "Keyless env + default fallback chain ends with structured all-providers-failed (retry semantics preserved)",
+      "input": {
+        "env": {"OPENAI_API_KEY": "", "FAL_KEY": ""},
+        "provider_chain": "__default__",
+        "max_retries": 3
+      },
+      "assert": {
+        "end_result": "all providers failed",
+        "manifest.failures_contains_provider_tags": ["trae-native", "seedream-plugin", "dalle3", "fal-flux"]
+      }
+    },
+    {
+      "id": "EP-009",
+      "title": "CLI dry-run with cards=1 only emits cover; cards=4 emits cover + card_1..3",
+      "cases": [
+        { "cards": 1, "expected_names": ["cover"] },
+        { "cards": 4, "expected_names": ["cover", "card_1", "card_2", "card_3"] }
+      ]
+    },
+    {
+      "id": "EP-010",
+      "title": "Every preset passes schema checks (8 required fields non-empty; 5 hex palette; paletteLock true)",
+      "input": { "target": "all_presets" },
+      "assert": {
+        "count_presets >= 8": true,
+        "negativeBase count >= 20": true,
+        "sizeMap covers 3:4/1:1/4:3/9:16": true
+      }
+    }
+  ]
+}
