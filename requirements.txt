@@ -1,5 +1,5 @@
 # =====================================================================
-# yy-text2-xhs-img runtime dependencies
+# yy-rednote-img runtime dependencies
 # =====================================================================
 # The core pipeline (schema -> prompt -> tasks.json -> manifest) only
 # requires Python 3.10+ stdlib.  Everything below is OPTIONAL: you need

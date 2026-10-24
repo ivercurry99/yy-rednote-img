@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-yy-text2-xhs-img : Xiaohongshu image pipeline main script.
+yy-rednote-img : Xiaohongshu image pipeline main script.
 
 Two execution modes:
   * agent-mode (default) — Pure Python: builds structured prompts, writes a tasks.json
@@ -537,7 +537,7 @@ def _parse_providers(raw: str) -> List[str]:
 def build_arg_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="generate.py",
-        description="yy-text2-xhs-img: structured Xiaohongshu AI image pipeline",
+        description="yy-rednote-img: structured Xiaohongshu AI image pipeline",
     )
     ap.add_argument("--topic", required=True, help="Note topic, one sentence.")
     ap.add_argument("--cards", type=int, required=True, help="Total number of images including cover.")

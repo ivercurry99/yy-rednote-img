@@ -1,10 +1,10 @@
-# yy-text2-xhs-img
+# yy-rednote-img
 
 把简短文本转换成小红书图文配图。风格预设、负面词和尺寸映射在调用模型前由配置文件确定，出图接口故障时按顺序切换供应商，每张图片生成后做文件完整性和比例校验。
 
 ## 项目简介
 
-`yy-text2-xhs-img` 接收简短文本需求（例如「夏天油皮护肤三步曲，做 4 张小红书配图」），输出 3:4 或其他常用比例的图片文件。调用出图接口前，各家供应商的尺寸映射、调色板、构图规则和风格负面词都由预设文件确定，不需要每次调用都重新编写提示词。
+`yy-rednote-img` 接收简短文本需求（例如「夏天油皮护肤三步曲，做 4 张小红书配图」），输出 3:4 或其他常用比例的图片文件。调用出图接口前，各家供应商的尺寸映射、调色板、构图规则和风格负面词都由预设文件确定，不需要每次调用都重新编写提示词。
 
 核心脚本 `scripts/generate.py` 处理以下几类问题：
 
@@ -64,13 +64,13 @@
 把下面这句话发给任意支持 Skill 的智能体（TRAE、Claude Desktop、Alma、Codex…）：
 
 ```text
-请从此 URL 安装 Skill：https://github.com/ivercurry99/yy-text2-xhs-img
+请从此 URL 安装 Skill：https://github.com/ivercurry99/yy-rednote-img
 ```
 
 如果你本机有 `skills` CLI：
 
 ```bash
-npx skills add ivercurry99/yy-text2-xhs-img
+npx skills add ivercurry99/yy-rednote-img
 ```
 
 也可以手动克隆到你的技能目录：
@@ -80,13 +80,13 @@ npx skills add ivercurry99/yy-text2-xhs-img
 #   TRAE:       ~/.trae/skills/   (Windows: %USERPROFILE%\.trae\skills\)
 #   Claude:     ~/.claude/skills/
 #   Alma:       ~/.config/Alma/skills/
-git clone https://github.com/ivercurry99/yy-text2-xhs-img.git <your-skills-dir>/yy-text2-xhs-img
+git clone https://github.com/ivercurry99/yy-rednote-img.git <your-skills-dir>/yy-rednote-img
 ```
 
 ### 安装 Python 依赖（仅 `--mode api` 需要）
 
 ```bash
-cd yy-text2-xhs-img
+cd yy-rednote-img
 pip install -r requirements.txt
 ```
 
@@ -103,7 +103,7 @@ pip install -r requirements.txt
 调用模型前，可以先用 `--dry-run-prompts` 打印完整的 Prompt 和负面词，确认调色板锁定行和场景细节后再实际生成。新的选题建议先空跑一次：
 
 ```bash
-cd yy-text2-xhs-img
+cd yy-rednote-img
 python scripts/generate.py ^
   --topic "20+ 夏天油皮护肤三步曲" ^
   --cards 4 ^
@@ -158,7 +158,7 @@ python scripts/generate.py … --strict
 ## 仓库结构
 
 ```text
-yy-text2-xhs-img/
+yy-rednote-img/
 ├── SKILL.md                        # Skill 清单 + 智能体执行规则
 ├── README.md
 ├── LICENSE                         # MIT 许可证

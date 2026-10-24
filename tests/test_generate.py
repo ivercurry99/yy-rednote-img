@@ -1,4 +1,4 @@
-"""Unit tests for yy-text2-xhs-img/scripts/generate.py — pure logic only, no real APIs.
+"""Unit tests for yy-rednote-img/scripts/generate.py — pure logic only, no real APIs.
 
 Run with:  pytest tests/test_generate.py -v
 """

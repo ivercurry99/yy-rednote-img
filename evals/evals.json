@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "yy-text2-xhs-img regression evals",
+  "name": "yy-rednote-img regression evals",
   "description": "Offline, provider-independent regression checks for prompt composition, size-map routing and fallback orchestration. Run via pytest (tests/test_generate.py covers every assertion here.)",
   "evals": [
     {

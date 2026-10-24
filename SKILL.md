@@ -1,5 +1,5 @@
 ---
-name: yy-text2-xhs-img
+name: yy-rednote-img
 description: "结构化 Prompt + 多模型适配器，一键生成小红书封面和正文配图。用户需要稳定、风格一致的小红书 AI 生图时使用；支持 TRAE 内置、Seedream 插件、DALL·E 3、FLUX 多模型自动降级，内置 8 种小红书风格预设与负面词库。"
 license: MIT
 version: 1.0.0
@@ -11,11 +11,11 @@ triggers:
   - "小红书 AI 封面"
   - "生成小红书图片"
   - "生成小红书封面"
-  - "yy text2 xhs"
-  - "text2 xhs img"
+  - "yy rednote img"
+  - "rednote img"
 ---
 
-# yy-text2-xhs-img · 小红书 AI 图文生成技能
+# yy-rednote-img · 小红书 AI 图文生成技能
 
 把用户的一句话需求，转化成**风格稳定、可复现、可降级**的小红书出图流水线。不再靠运气每次"摇骰子"，而是：
 
@@ -156,7 +156,7 @@ output/20260829-200215-abc123/
 ## 仓库结构
 
 ```
-yy-text2-xhs-img/
+yy-rednote-img/
 ├── SKILL.md                    # 智能体行为规范（本文件）
 ├── README.md                   # 面向用户的 GitHub 项目说明
 ├── LICENSE                     # MIT 许可证
@@ -182,5 +182,5 @@ yy-text2-xhs-img/
 
 - "小红书生图"、"小红书配图"、"xhs 配图"
 - "生成小红书封面"、"小红书 AI 封面"
-- "text2 xhs img"、"yy text2 xhs"
+- "rednote img"、"yy rednote img"
 - "帮我画 4 张小红书护肤图" / 任意包含「小红书 + 图片」的组合意图
