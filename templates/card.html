@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>card</title>
+<style>
+  :root {
+    --bg: {{BG}};
+    --fg: {{FG}};
+    --accent: {{ACCENT}};
+    --muted: {{MUTED}};
+    --panel: {{PANEL}};
+    --radius: {{RADIUS}};
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1440px; overflow: hidden; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: {{FONT}};
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .page {
+    position: relative;
+    width: 1080px;
+    height: 1440px;
+    padding: 112px 96px 92px;
+    display: flex;
+    flex-direction: column;
+  }
+  .rail {
+    position: absolute; left: 0; top: 0; width: 16px; height: 100%;
+    background: var(--accent);
+  }
+  .blob {
+    position: absolute; right: -180px; top: -180px;
+    width: 520px; height: 520px; border-radius: 50%;
+    background: var(--panel); opacity: .55;
+  }
+  .blob.small {
+    right: auto; top: auto; left: -140px; bottom: -160px;
+    width: 360px; height: 360px; opacity: .45;
+  }
+  .top {
+    position: relative;
+    display: flex; align-items: center; gap: 18px;
+    font-size: 28px; letter-spacing: 2px; color: var(--muted);
+  }
+  .kicker {
+    display: inline-block;
+    padding: 10px 22px;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+  .main {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 40px;
+  }
+  .title {
+    font-size: {{TITLE_SIZE}}px;
+    line-height: 1.28;
+    font-weight: 800;
+    letter-spacing: 1px;
+    word-break: break-word;
+  }
+  .rule {
+    width: 132px; height: 10px; border-radius: 6px;
+    background: var(--accent);
+    margin: 40px 0 36px;
+  }
+  .lead {
+    font-size: 40px;
+    line-height: 1.75;
+    color: var(--fg);
+    opacity: .92;
+    max-width: 840px;
+    white-space: pre-wrap;
+  }
+  .subtitle {
+    margin-top: 40px;
+    font-size: 44px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .bullets { margin-top: 52px; display: flex; flex-direction: column; gap: 34px; }
+  .bullet { display: flex; gap: 26px; align-items: flex-start; }
+  .num {
+    flex: 0 0 auto;
+    width: 66px; height: 66px;
+    border-radius: {{RADIUS}};
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 32px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 6px;
+  }
+  .bullet-text { font-size: 38px; line-height: 1.66; }
+  .bullet-text strong { color: var(--accent); font-weight: 800; }
+  .callout {
+    margin-top: 54px;
+    padding: 34px 38px;
+    background: var(--panel);
+    border-left: 10px solid var(--accent);
+    border-radius: {{RADIUS}};
+    font-size: 34px;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+  .bottom {
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 26px; color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .bottom .handle { display: flex; align-items: center; gap: 14px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .pager { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="rail"></div>
+  <div class="blob"></div>
+  <div class="blob small"></div>
+
+  <div class="top"><span class="kicker">{{KICKER}}</span></div>
+
+  <div class="main">
+    {{BODY}}
+  </div>
+
+  <div class="bottom">
+    <div class="handle"><span class="dot"></span><span>{{AUTHOR}}</span></div>
+    <div class="pager">{{PAGER}}</div>
+  </div>
+</div>
+</body>
+</html>
