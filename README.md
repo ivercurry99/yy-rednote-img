@@ -8,17 +8,21 @@
 
 ## 示例
 
-下面四张是 `scripts/card.py` 的真实输出，换个 `--theme` 就是另一套观感：
+下面两组是作者之前实际发布过的图文，版式出自同一类 HTML 排版流程。左边的封面负责拦住人，右边三张讲清一件事。
 
-| `ins-aesthetic` | `neo-chinese` | `cute-illustration` | `magazine-editorial` |
+**心理学效应 · 32 个定律（上篇）**
+
+| 封面 | 01 墨菲定律 | 02 沉没成本 | 03 幸存者偏差 |
 |---|---|---|---|
-| ![奶油风封面：3 个让早起变简单的方法](assets/set-early-rising/cover.png) | ![国潮风封面：什么是复利效应](assets/demo-neo-chinese/cover.png) | ![马卡龙风封面：新手记账第一周怎么开始](assets/demo-cute-illustration/cover.png) | ![杂志风封面：为什么你总是读不完一本书](assets/demo-magazine-editorial/cover.png) |
+| ![封面：改变你决策的 32 个心理学效应](assets/showcase-psychology/00-cover.png) | ![墨菲定律](assets/showcase-psychology/01-murphy-law.png) | ![沉没成本](assets/showcase-psychology/02-sunk-cost.png) | ![幸存者偏差](assets/showcase-psychology/03-survivor-bias.png) |
 
-一组完整的四张（封面 + 三张正文）：
+**DeepSeek V4 API 全拆解**
 
-| 封面 | 01 | 02 | 03 |
+| 封面 | 01 两大模型怎么选 | 02 深度思考模式 | 03 快速上手 |
 |---|---|---|---|
-| ![](assets/set-early-rising/cover.png) | ![](assets/set-early-rising/card_1.png) | ![](assets/set-early-rising/card_2.png) | ![](assets/set-early-rising/card_3.png) |
+| ![封面：DeepSeek API 全拆解](assets/showcase-deepseek/00-cover.png) | ![V4-Flash 与 V4-Pro 对比](assets/showcase-deepseek/01-two-models.png) | ![深度思考模式](assets/showcase-deepseek/02-thinking-mode.png) | ![快速上手](assets/showcase-deepseek/03-quick-start.png) |
+
+`examples/` 里有 4 份可以直接跑的 `content.json`，渲染出来是同一套模板的卡片。
 
 ## 两条路线
 
