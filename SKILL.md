@@ -1,6 +1,6 @@
 ---
 name: yy-rednote-img
-description: "把一段中文文字排成可直接发布的小红书图文卡片（封面 + 正文），基于 HTML 模板和本机 Chrome 无头渲染，中文不会糊字；也可以调用 8 套风格预设做 AI 配图，支持 TRAE 内置、Seedream、DALL·E 3、FLUX 多路降级。用户要「文字转图文」「小红书知识卡片」「小红书配图」时使用。"
+description: "把一段中文文字排成可以直接发布的小红书图文（封面加正文），也可以按风格预设调用 AI 配图，配图效果取决于所用模型。用户说「文字转图文」「小红书图文」「知识卡片」「小红书配图」时使用。"
 license: MIT
 version: 1.1.0
 author: ivercurry99

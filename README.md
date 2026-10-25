@@ -4,11 +4,11 @@
 
 ![License](https://img.shields.io/badge/license-MIT-green) ![Python](https://img.shields.io/badge/python-3.10%2B-blue) ![CI](https://github.com/ivercurry99/yy-rednote-img/workflows/ci.yml/badge.svg)
 
-把一段文字排成能直接发的小红书图文。标题、要点、金句给你排成 1080×1440 的卡片，中文由系统字体渲染，不会出现错字和糊字。需要配图时，再用内置的 8 套风格预设调 AI 出图。
+这个技能把一段中文文字排成一组可以直接发布的小红书图文：一张封面加若干张正文，每张 1080×1440。文字由系统字体排版，不经过图像模型，所以不会出现错字和糊字。
 
 ## 示例
 
-下面两组是作者之前实际发布过的图文，版式出自同一类 HTML 排版流程。左边的封面负责拦住人，右边三张讲清一件事。
+下面两组是我之前实际发布过的图文，封面负责让人停下来，后面三张各讲一件事。
 
 **心理学效应 · 32 个定律（上篇）**
 
@@ -22,79 +22,17 @@
 |---|---|---|---|
 | ![封面：DeepSeek API 全拆解](assets/showcase-deepseek/00-cover.png) | ![V4-Flash 与 V4-Pro 对比](assets/showcase-deepseek/01-two-models.png) | ![深度思考模式](assets/showcase-deepseek/02-thinking-mode.png) | ![快速上手](assets/showcase-deepseek/03-quick-start.png) |
 
-`examples/` 里有 4 份可以直接跑的 `content.json`，渲染出来是同一套模板的卡片。
+## 用法
 
-## 两条路线
-
-**文字卡片（`scripts/card.py`）**：你给标题和要点，脚本写 HTML、调用本机 Chrome / Edge 无头模式截图。中文排版精确，字号会按标题长度自动挑，放不下就换字号，不会溢出。
-
-**AI 配图（`scripts/generate.py`）**：需要照片感、插画感的封面时用。8 套预设锁定调色板、构图、灯光，4 家出图接口按顺序降级，每张图落地前检查 PNG 文件头、体积和比例。
-
-两条路线可以混用：文字卡当正文，AI 图当封面。
-
-## 安装
-
-```text
-请从此 URL 安装 Skill：https://github.com/ivercurry99/yy-rednote-img
-```
-
-或者：
+把准备好的文字交给技能，说明要拆成几张，它会挑一套配色，写好版式，调用本机浏览器截成图片。也可以自己运行：
 
 ```bash
-npx skills add ivercurry99/yy-rednote-img
-git clone https://github.com/ivercurry99/yy-rednote-img.git <你的技能目录>/yy-rednote-img
+python scripts/card.py --input examples/early-rising.json --out output/cards --theme ins-aesthetic
 ```
 
-文字卡片只需要 Python 3.10+ 和本机已有的 Chrome 或 Edge，不需要装任何 Python 包。找不到浏览器时，用 `CHROME_PATH` 指定可执行文件路径。
+内容用一份 JSON 描述，包括标题、副标题、正文段落、要点列表和金句框。`examples/` 里有 4 份可以直接跑。
 
-## 写一份内容
-
-新建 `content.json`：
-
-```json
-{
-  "author": "@你的小红书号",
-  "cards": [
-    {
-      "type": "cover",
-      "kicker": "早起",
-      "title": "3 个让早起变简单的方法",
-      "subtitle": "不靠意志力，靠前一天晚上的设计"
-    },
-    {
-      "kicker": "方法 01",
-      "title": "先固定起床，再倒推睡觉",
-      "lead": "把起床时间定死，连续记三天，你会知道自己实际需要几个小时。",
-      "callout": "影响作息的关键变量是起床时间，不是入睡时间。"
-    },
-    {
-      "kicker": "方法 02",
-      "title": "把早上的第一个动作做小",
-      "bullets": ["拉开窗帘", "喝一杯水", "不要先看手机"]
-    }
-  ]
-}
-```
-
-字段说明：第一张默认按封面排版（大标题 + 副标题），后面的卡片支持 `lead` 段落、`bullets` 编号列表、`callout` 金句框。
-
-渲染：
-
-```bash
-python scripts/card.py --input content.json --out output/cards --theme ins-aesthetic
-```
-
-产物：
-
-```text
-output/cards/
-├── cover.png
-├── card_1.png
-├── card_2.png
-└── _html/          # 中间 HTML，想手改样式就改这里
-```
-
-## 可用主题
+## 配色
 
 | `--theme` | 观感 | 适合 |
 |---|---|---|
@@ -107,19 +45,32 @@ output/cards/
 | `product-flatlay` | 亚麻灰底、橄榄绿 | 好物 · 清单 · 开箱 |
 | `cute-illustration` | 粉底、圆角大 | 教程 · 儿童 · 知识卡 |
 
-主题定义在 `scripts/card.py` 的 `THEMES` 里，改一组色值就能加自己的风格。
+配色写在 `scripts/card.py` 的 `THEMES` 里，改一组色值就能加自己的风格。
+
+## 安装与环境
+
+```bash
+npx skills add ivercurry99/yy-rednote-img
+git clone https://github.com/ivercurry99/yy-rednote-img.git <你的技能目录>/yy-rednote-img
+```
+
+需要 Python 3.10+ 和本机已装的 Chrome 或 Edge，不用安装 Python 包。找不到浏览器时，用 `CHROME_PATH` 指定可执行文件路径。
 
 ## AI 配图（可选）
 
+封面需要照片或插画质感时，可以另外调用配图脚本。脚本准备了 8 套风格预设，按 TRAE 内置、Seedream、DALL·E 3、FLUX 的顺序切换供应商。
+
+这类图片由模型生成，效果取决于所调模型的能力：同样的提示词，换一个模型或换一次运行，画面可能不一样。文字卡片不受影响。
+
 ```bash
-# 先空跑看 Prompt，不花额度
+# 先空跑看提示词，不花额度
 python scripts/generate.py --topic "夏天油皮护肤三步曲" --cards 4 --style ins-aesthetic --ratio 3:4 --dry-run-prompts
 
 # 正式生成
 python scripts/generate.py --topic "夏天油皮护肤三步曲" --cards 4 --style ins-aesthetic --ratio 3:4
 ```
 
-8 套风格预设、4 路供应商降级（TRAE 内置 → Seedream → DALL·E 3 → FLUX）、比例映射和图片校验都在 `references/` 里写清楚了。只有用 API 模式直连 DALL·E 3 / FLUX 时才需要配 Key。
+比例映射、图片校验和降级细节写在 `references/` 里。直连 DALL·E 3 或 FLUX 时才需要配 Key。
 
 ## 测试
 
@@ -127,7 +78,7 @@ python scripts/generate.py --topic "夏天油皮护肤三步曲" --cards 4 --sty
 pytest tests/ -v
 ```
 
-`tests/test_card.py` 覆盖字号计算、HTML 转义、内容校验和 PNG 尺寸检查，不依赖浏览器；`tests/test_generate.py` 覆盖 Prompt 拼接、尺寸映射和降级链，全部离线。
+`tests/test_card.py` 覆盖字号计算、HTML 转义、内容校验和图片尺寸检查，不依赖浏览器；`tests/test_generate.py` 覆盖提示词拼接、尺寸映射和供应商降级，全部离线。
 
 ## 许可证
 
